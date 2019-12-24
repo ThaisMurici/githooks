@@ -15,7 +15,37 @@ This app is built using:
 
 ## Key observations
 
-- **Functions inside components:** since components are now written as functions instead of classes, there's no need to use **this** anymore. To use functions, simply declare them inside your component (yes! functions inside functions). In JavaScript, when a function is declared inside another function, it gets scoped inside its parent. That way, it is not possible to access it externally.
+- **useState**
+
+  Hook used to store a piece of state and modify it. Returns two values: the state and the function used to modify it. Receives an argument, which is the initial state.
+
+  ```js
+  const [repositories, setRepositories] = useState([]);
+  ```
+
+  In the example above, there's a state called `repositories`, which initial value is `[]`. To update it, it's necessary to call `setRepositories`, like shown below:
+
+  ```js
+  setRepositories([...repositories, { id: Math.random(), name: "New repo" }]);
+  ```
+
+- **Functions inside components**
+
+  Since components are now written as functions instead of classes, there's no need to use **this** anymore. To use functions, simply declare them inside your component (yes! functions inside functions). In JavaScript, when a function is declared inside another function, it gets scoped inside its parent. That way, it is not possible to access it externally.
+
+- **How to use lifecycles?**
+
+  Now that components are written as functions, lifecycles are used through the `useEffect` hook.
+
+- useEffect
+
+  The `useEffect` hook receives two params: (1) the function to be executed and (2) the circumstances when this function should be executed. Those circumstances are, in fact, events of variables changing. For the example below, the function will be executed every time the variable `repositories` changes.
+
+  ```js
+  useEffect(() => {}, [repositories]);
+  ```
+
+  Note: it's possible to pass more than one variable to the hook, that's why the second argument is an array.
 
 ## Getting started
 

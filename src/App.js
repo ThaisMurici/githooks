@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
-  const [repositories, setRepositories] = useState([
-    { id: 1, name: "repo-1" },
-    { id: 1, name: "repo-2" },
-    { id: 1, name: "repo-3" }
-  ]);
+  const [repositories, setRepositories] = useState([]);
 
-  function handleAddRepository() {
-    setRepositories([
-      ...repositories,
-      { id: Math.random(), name: "Novo repo" }
-    ]);
-  }
+  useEffect(() => {
+    async function fetchRepositories() {
+      const response = await fetch(
+        "https://api.github.com/users/thaismurici/repos"
+      );
+      const data = await response.json();
+
+      setRepositories(data);
+    }
+    fetchRepositories();
+  }, []); // executed only once
 
   return (
     <>
@@ -21,7 +22,6 @@ function App() {
           <li key={repo.id}>{repo.name}</li>
         ))}
       </ul>
-      <button onClick={handleAddRepository}>Adicionar repositório</button>
     </>
   );
 }
