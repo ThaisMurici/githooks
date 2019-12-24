@@ -15,11 +15,25 @@ function App() {
     fetchRepositories();
   }, []); // executed only once
 
+  function handleFavorite(id) {
+    const updatedRepositories = repositories.map(repo => {
+      return repo.id === id ? { ...repo, favorite: true } : repo;
+    });
+
+    setRepositories(updatedRepositories);
+  }
+
   return (
     <>
       <ul>
         {repositories.map(repo => (
-          <li key={repo.id}>{repo.name}</li>
+          <li key={repo.id}>
+            {repo.name}
+            {repo.favorite && <span> (*)</span>}
+            <button onClick={() => handleFavorite(repo.id)}>
+              Mark as favorite
+            </button>
+          </li>
         ))}
       </ul>
     </>
