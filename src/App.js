@@ -17,26 +17,24 @@ function App() {
 
   function handleFavorite(id) {
     const updatedRepositories = repositories.map(repo => {
-      return repo.id === id ? { ...repo, favorite: true } : repo;
+      return repo.id === id ? { ...repo, favorite: !repo.favorite } : repo;
     });
 
     setRepositories(updatedRepositories);
   }
 
   return (
-    <>
-      <ul>
-        {repositories.map(repo => (
-          <li key={repo.id}>
-            {repo.name}
-            {repo.favorite && <span> (*)</span>}
-            <button onClick={() => handleFavorite(repo.id)}>
-              Mark as favorite
-            </button>
-          </li>
-        ))}
-      </ul>
-    </>
+    <ul>
+      {repositories.map(repo => (
+        <li key={repo.id}>
+          {repo.name}
+          {repo.favorite && <span> (*)</span>}
+          <button onClick={() => handleFavorite(repo.id)}>
+            Mark as favorite
+          </button>
+        </li>
+      ))}
+    </ul>
   );
 }
 
