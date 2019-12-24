@@ -13,7 +13,13 @@ function App() {
       setRepositories(data);
     }
     fetchRepositories();
-  }, []); // executed only once
+  }, []); // executed only once - componentDidMount
+
+  useEffect(() => {
+    const filtered = repositories.filter(repo => repo.favorite);
+
+    document.title = `You have ${filtered.length} favorites.`;
+  }, [repositories]); // executed everytime `repositories` changes - componentDidUpdate
 
   function handleFavorite(id) {
     const updatedRepositories = repositories.map(repo => {
