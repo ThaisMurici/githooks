@@ -37,7 +37,39 @@ This app is built using:
 
   Now that components are written as functions, lifecycles are used through the `useEffect` hook.
 
-- useEffect
+  - _componentDidMount_: executed only once, after component is mounted. To reproduce it using hooks, pass an empty array. As there is no variables passed, it will listen to nothing, never being triggered again.
+
+  ```js
+  useEffect(() => {}, []);
+  ```
+
+  - _componentDidUpdate_: executed on every component update. To reproduce it using hooks, pass one or more variables. Note that now it's possible to have several _componentDidUpdate_ behaviours, one for each state piece.
+
+  ```js
+  useEffect(() => {}, [repositories]);
+  ```
+
+  - _componentWillUnmount_: executed when component is umnounted. To reproduce it using hooks, the `useEffect` hook must return a function. Every function returned by an `useEffect` hook is executed when a component is unmounted and no longer exists. Note that now it's possible to have several _componentWillUnmount_ behaviours, one for each state piece.
+
+  ```js
+  useEffect(() => {
+    // function body
+
+    return () => {}; // function to be executed when component unmounts
+  }, []);
+  ```
+
+  Example using concept of subscribing and unsubscribing listeners:
+
+  ```js
+  useEffect(() => {
+    const watchId = navigator.geolocation.watchPosition(handlePositionReceived);
+
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, []);
+  ```
+
+- **useEffect**
 
   The `useEffect` hook receives two params: (1) the function to be executed and (2) the circumstances when this function should be executed. Those circumstances are, in fact, events of variables changing. For the example below, the function will be executed every time the variable `repositories` changes.
 
